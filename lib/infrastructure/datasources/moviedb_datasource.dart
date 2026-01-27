@@ -11,7 +11,7 @@ class MoviedbDatasource extends MoviesDatasource{
     baseUrl: 'https://api.themoviedb.org/3',
     queryParameters: {
       'api_key':Environment.theMovieDbKey,
-      'language': 'ES'
+      'language': 'es'
 
     } 
   ));
