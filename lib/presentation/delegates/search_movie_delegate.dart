@@ -38,7 +38,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?>{
 
     if (_debounceTimer?.isActive ?? false)_debounceTimer!.cancel();
 
-    _debounceTimer = Timer(const Duration(milliseconds: 500), () async{
+    _debounceTimer = Timer(const Duration(milliseconds: 1000), () async{
 
       final movies = await searchMovies(query);
       initialMovies = movies;  
@@ -81,7 +81,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?>{
     builder: (context, snapshot) {
       if(snapshot.data ?? false){
         return SpinPerfect(
-              duration: const Duration(seconds: 20),
+              duration: const Duration(seconds: 1),
               spins: 10,
               infinite: true,
               child: 
