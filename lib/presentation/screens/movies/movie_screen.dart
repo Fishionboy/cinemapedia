@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/presentation/providers/actors/actors_by_movie_provider.dart';
 import 'package:cinemapedia/presentation/providers/movies/movie_info_provider.dart';
+import 'package:cinemapedia/presentation/providers/storage/favorite_movies_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -177,7 +178,7 @@ class _ActorsByMovie extends ConsumerWidget {
   }
 }
 
-class _CustomSliverAppBar extends StatelessWidget {
+class _CustomSliverAppBar extends ConsumerWidget {
   
   final Movie movie;
   const _CustomSliverAppBar(
@@ -185,7 +186,7 @@ class _CustomSliverAppBar extends StatelessWidget {
     );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     
     final size = MediaQuery.of(context).size;   
 
@@ -196,8 +197,9 @@ class _CustomSliverAppBar extends StatelessWidget {
 
       actions: [
          IconButton(
-              onPressed: () {
-                
+              onPressed: () async{
+                ref.read(favoriteMoviesProvider.notifier)
+                .toggleFavoriteMovie(movie);
               }, 
               // icon: const Icon(Icons.favorite_border_outlined)),
               icon: const Icon(Icons.favorite,color: Colors.red,)),
