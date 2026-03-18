@@ -3,6 +3,7 @@ import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/presentation/providers/actors/actors_by_movie_provider.dart';
 import 'package:cinemapedia/presentation/providers/movies/movie_info_provider.dart';
 import 'package:cinemapedia/presentation/providers/storage/favorite_movies_provider.dart';
+import 'package:cinemapedia/presentation/providers/storage/is_favorite_movie_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -181,14 +182,13 @@ class _ActorsByMovie extends ConsumerWidget {
 class _CustomSliverAppBar extends ConsumerWidget {
   
   final Movie movie;
-  const _CustomSliverAppBar(
-    {required this.movie}
-    );
+  const _CustomSliverAppBar({required this.movie});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     
-    final size = MediaQuery.of(context).size;   
+    final size = MediaQuery.of(context).size; 
+    final isFavoriteFuture = ref.watch(isFavoriteMovieProvider(movie.id));  
 
     return SliverAppBar(
       backgroundColor: Colors.black,
@@ -198,11 +198,20 @@ class _CustomSliverAppBar extends ConsumerWidget {
       actions: [
          IconButton(
               onPressed: () async{
-                ref.read(favoriteMoviesProvider.notifier)
+               await ref
+                .read(favoriteMoviesProvider.notifier)
                 .toggleFavoriteMovie(movie);
+                ref.invalidate(isFavoriteMovieProvider(movie.id));
               }, 
-              // icon: const Icon(Icons.favorite_border_outlined)),
-              icon: const Icon(Icons.favorite,color: Colors.red,)),
+              icon: isFavoriteFuture.when(
+                data: (isFavorite)=> isFavorite
+                ?const Icon(Icons.favorite,color: Colors.red,)
+                :const Icon(Icons.favorite_border_outlined),
+                error: (_, _)=>throw Exception('Error al cargar el estado de favoritos'), 
+                loading: ()=>const CircularProgressIndicator(strokeWidth: 2)
+                ),
+              ),
+             
       ],
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

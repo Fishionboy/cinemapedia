@@ -60,6 +60,7 @@ class DriftDatasource extends LocalStorageDatasource{
     ..where((table)=> table.movieId.equals(movie.id));
 
     await deleteQuery.go();
+    return;
    }
 
    await database.into(database.favoriteMovies)
