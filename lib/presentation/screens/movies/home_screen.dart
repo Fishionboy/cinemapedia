@@ -1,3 +1,4 @@
+import 'package:cinemapedia/presentation/widgets/shared/side_menu.dart';
 import 'package:cinemapedia/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -20,6 +21,7 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: CustomBottomNavigation(
         navigationShell: navigationShell,
       ),
+      drawer: SideMenu(),
     
     );
   }

@@ -38,6 +38,7 @@ class HomeViewState extends ConsumerState<HomeView> {
 
          SliverAppBar(
           floating: true,
+          automaticallyImplyLeading: false,
           flexibleSpace: FlexibleSpaceBar(
             background: Container(
               alignment: Alignment.center,

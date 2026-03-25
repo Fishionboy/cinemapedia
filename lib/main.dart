@@ -1,4 +1,5 @@
 import 'package:cinemapedia/config/database/database.dart';
+import 'package:cinemapedia/presentation/providers/settings/settings_app_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cinemapedia/config/router/app_router.dart';
@@ -30,15 +31,17 @@ Future <void> main() async{
    );
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AppTheme appTheme = ref.watch(themeNotifierProvider);
+
     return MaterialApp.router(
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
-      theme: AppTheme().getTheme(),     
+      theme: appTheme.getTheme(),     
     );
   }
 }
