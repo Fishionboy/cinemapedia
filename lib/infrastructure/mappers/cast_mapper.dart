@@ -1,9 +1,9 @@
-import 'package:cinemapedia/domain/entities/actor.dart';
+import 'package:cinemapedia/domain/entities/cast.dart';
 import 'package:cinemapedia/infrastructure/models/moviedb/credits_response.dart';
 
-class ActorMapper {
+class CastMapper {
 
-  static Actor castToEntity(Cast cast) => Actor(
+  static Cast castToEntity(CastDto cast) => Cast(
     id: cast.id, 
     name: cast.name, 
     profilePath: cast.profilePath != null

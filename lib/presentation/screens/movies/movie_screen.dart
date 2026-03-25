@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
-import 'package:cinemapedia/presentation/providers/actors/actors_by_movie_provider.dart';
+import 'package:cinemapedia/presentation/providers/cast/cast_by_movie_provider.dart';
 import 'package:cinemapedia/presentation/providers/movies/movie_info_provider.dart';
 import 'package:cinemapedia/presentation/providers/storage/favorite_movies_provider.dart';
 import 'package:cinemapedia/presentation/providers/storage/is_favorite_movie_provider.dart';
@@ -28,7 +28,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   void initState() {
     super.initState();
     ref.read(movieInfoProvider.notifier).loadMovie(widget.movieId);
-    ref.read(actorsByMovieProvider.notifier).loadActors(widget.movieId);
+    ref.read(castByMovieProvider.notifier).loadCast(widget.movieId);
   }
 
   @override
@@ -126,7 +126,7 @@ class _ActorsByMovie extends ConsumerWidget {
   @override
   Widget build(BuildContext context,ref) {
 
-    final actorsByMovie = ref.watch(actorsByMovieProvider);
+    final actorsByMovie = ref.watch(castByMovieProvider);
 
     if(actorsByMovie[movieId] == null){
       return const CircularProgressIndicator(strokeWidth: 2,);
