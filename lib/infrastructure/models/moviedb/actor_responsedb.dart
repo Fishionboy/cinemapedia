@@ -1,14 +1,10 @@
-// To parse this JSON data, do
-//
-//     final movieDetails = movieDetailsFromJson(jsonString);
-
 import 'dart:convert';
 
-MovieDetails movieDetailsFromJson(String str) => MovieDetails.fromJson(json.decode(str));
+ActorById actorByIdFromJson(String str) => ActorById.fromJson(json.decode(str));
 
-String movieDetailsToJson(MovieDetails data) => json.encode(data.toJson());
+String actorByIdToJson(ActorById data) => json.encode(data.toJson());
 
-class MovieDetails {
+class ActorById {
     final bool adult;
     final List<String> alsoKnownAs;
     final String biography;
@@ -24,7 +20,7 @@ class MovieDetails {
     final double popularity;
     final String profilePath;
 
-    MovieDetails({
+    ActorById({
         required this.adult,
         required this.alsoKnownAs,
         required this.biography,
@@ -41,7 +37,7 @@ class MovieDetails {
         required this.profilePath,
     });
 
-    factory MovieDetails.fromJson(Map<String, dynamic> json) => MovieDetails(
+    factory ActorById.fromJson(Map<String, dynamic> json) => ActorById(
         adult: json["adult"],
         alsoKnownAs: List<String>.from(json["also_known_as"].map((x) => x)),
         biography: json["biography"],
@@ -55,7 +51,7 @@ class MovieDetails {
         name: json["name"],
         placeOfBirth: json["place_of_birth"],
         popularity: json["popularity"]?.toDouble(),
-        profilePath: json["profile_path"],
+        profilePath: json["profile_path"] ?? 'https://i.pinimg.com/736x/2f/15/f2/2f15f2e8c688b3120d3d26467b06330c.jpg',
     );
 
     Map<String, dynamic> toJson() => {

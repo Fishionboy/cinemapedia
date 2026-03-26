@@ -1,8 +1,6 @@
-// To parse this JSON data, do
-//
-//     final movieDetails = movieDetailsFromJson(jsonString);
-
 import 'dart:convert';
+
+import 'package:cinemapedia/core/helpers/json_helpers.dart';
 
 CreditsResponse movieDetailsFromJson(String str) => CreditsResponse.fromJson(json.decode(str));
 
@@ -33,47 +31,47 @@ class CreditsResponse {
 }
 
 class CastDto {
-    final bool adult;
-    final int gender;
     final int id;
-    final String knownForDepartment;
     final String name;
-    final String originalName;
-    final double popularity;
+    final bool? adult;
+    final int? gender;
+    final String? knownForDepartment;
+    final String? originalName;
+    final double? popularity;
     final String? profilePath;
     final int? castId;
     final String? character;
-    final String creditId;
+    final String? creditId;
     final int? order;
     final String? department;
     final String? job;
 
     CastDto({
-        required this.adult,
-        required this.gender,
         required this.id,
-        required this.knownForDepartment,
         required this.name,
-        required this.originalName,
-        required this.popularity,
-        required this.profilePath,
+        this.adult,
+        this.gender,
+        this.knownForDepartment,
+        this.originalName,
+        this.popularity,
+        this.profilePath,
         this.castId,
         this.character,
-        required this.creditId,
+        this.creditId,
         this.order,
         this.department,
         this.job,
     });
 
     factory CastDto.fromJson(Map<String, dynamic> json) => CastDto(
-        adult: json["adult"],
-        gender: json["gender"],
         id: json["id"],
-        knownForDepartment: json["known_for_department"]!,
         name: json["name"],
+        adult: asBool(json["adult"]) ,
+        gender: json["gender"] is int ? json["gender"] : null,
+        knownForDepartment: json["known_for_department"]!,
         originalName: json["original_name"],
         popularity: json["popularity"]?.toDouble(),
-        profilePath: json["profile_path"],
+        profilePath: json["profile_path"] ?? 'https://i.pinimg.com/736x/2f/15/f2/2f15f2e8c688b3120d3d26467b06330c.jpg',
         castId: json["cast_id"],
         character: json["character"],
         creditId: json["credit_id"],
@@ -90,7 +88,7 @@ class CastDto {
         "name": name,
         "original_name": originalName,
         "popularity": popularity,
-        "profile_path": profilePath,
+        "profile_path": profilePath ?? 'https://i.pinimg.com/736x/2f/15/f2/2f15f2e8c688b3120d3d26467b06330c.jpg',
         "cast_id": castId,
         "character": character,
         "credit_id": creditId,
