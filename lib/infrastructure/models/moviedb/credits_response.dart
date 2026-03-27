@@ -33,9 +33,10 @@ class CreditsResponse {
 class CastDto {
     final int id;
     final String name;
+
     final bool? adult;
     final int? gender;
-    final String? knownForDepartment;
+    final List<String>? knownForDepartment;
     final String? originalName;
     final double? popularity;
     final String? profilePath;
@@ -47,37 +48,40 @@ class CastDto {
     final String? job;
 
     CastDto({
-        required this.id,
-        required this.name,
-        this.adult,
-        this.gender,
-        this.knownForDepartment,
-        this.originalName,
-        this.popularity,
-        this.profilePath,
-        this.castId,
-        this.character,
-        this.creditId,
-        this.order,
-        this.department,
-        this.job,
+      required this.id,
+      required this.name,
+
+      required this.adult,
+      required this.gender,
+      required this.knownForDepartment,
+      required this.originalName,
+      required this.popularity,
+      required this.profilePath,
+      required this.castId,
+      required this.character,
+      required this.creditId,
+      required this.order,
+      required this.department,
+      required this.job,
     });
 
     factory CastDto.fromJson(Map<String, dynamic> json) => CastDto(
-        id: json["id"],
-        name: json["name"],
+        id: json["id"]!,
+        name: json["name"]!,
         adult: asBool(json["adult"]) ,
-        gender: json["gender"] is int ? json["gender"] : null,
-        knownForDepartment: json["known_for_department"]!,
-        originalName: json["original_name"],
-        popularity: json["popularity"]?.toDouble(),
-        profilePath: json["profile_path"] ?? 'https://i.pinimg.com/736x/2f/15/f2/2f15f2e8c688b3120d3d26467b06330c.jpg',
-        castId: json["cast_id"],
-        character: json["character"],
-        creditId: json["credit_id"],
-        order: json["order"],
-        department: json["department"],
-        job: json["job"],
+        gender: asInt(json["gender"]),
+        knownForDepartment:json["also_known_as"] != null 
+          ? List<String>.from(json["also_known_as"].map((x) =>asString(x)))
+          : null ,
+        originalName: asString(json["original_name"]),
+        popularity: asDouble(json["popularity"]),
+        profilePath: asString(json["profile_path"]) ,
+        character: asString(json["character"]),
+        creditId: asString(json["credit_id"]),
+        order: asInt(json["order"]),
+        department: asString(json["department"]),
+        job: asString(json["job"]),
+        castId: asInt(json["cast_id"])
     );
 
     Map<String, dynamic> toJson() => {
@@ -88,13 +92,14 @@ class CastDto {
         "name": name,
         "original_name": originalName,
         "popularity": popularity,
-        "profile_path": profilePath ?? 'https://i.pinimg.com/736x/2f/15/f2/2f15f2e8c688b3120d3d26467b06330c.jpg',
+        "profile_path": profilePath,
         "cast_id": castId,
         "character": character,
         "credit_id": creditId,
         "order": order,
         "department": department,
         "job": job,
+        
     };
 }
 

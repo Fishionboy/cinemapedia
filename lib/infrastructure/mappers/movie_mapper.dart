@@ -11,17 +11,17 @@ class MovieMapper {
     genreIds: moviedb.genreIds.map((e)=>e.toString()).toList(),
     id: moviedb.id,
     originalLanguage: moviedb.originalLanguage,
-    originalTitle: moviedb.originalTitle,
-    overview: moviedb.overview,
-    popularity: moviedb.popularity,
+    originalTitle: moviedb.originalTitle ?? '',
+    overview: moviedb.overview ?? '',
+    popularity: moviedb.popularity ?? -1,
     posterPath: (moviedb.posterPath != '')
     ? 'https://image.tmdb.org/t/p/w500/${moviedb.posterPath}'
     : 'https://movienewsletters.net/photos/000000H1.jpg',
     releaseDate: moviedb.releaseDate,
     title: moviedb.title,
-    video: moviedb.video,
-    voteAverage: moviedb.voteAverage,
-    voteCount: moviedb.voteCount,
+    video: moviedb.video ?? false,
+    voteAverage: moviedb.voteAverage ?? -1,
+    voteCount: moviedb.voteCount ?? -1,
   );
 
   static Movie movieDetailsToEntity ( MovieDetails moviedb) => Movie(
@@ -33,15 +33,15 @@ class MovieMapper {
     id: moviedb.id,
     originalLanguage: moviedb.originalLanguage,
     originalTitle: moviedb.originalTitle,
-    overview: moviedb.overview,
-    popularity: moviedb.popularity,
+    overview: moviedb.overview ?? 'no-overview',
+    popularity: moviedb.popularity ?? -1,
     posterPath: (moviedb.posterPath != '')
     ? 'https://image.tmdb.org/t/p/w500/${moviedb.posterPath}'
     : 'no-poster',
     releaseDate: moviedb.releaseDate,
     title: moviedb.title,
-    video: moviedb.video,
-    voteAverage: moviedb.voteAverage,
-    voteCount: moviedb.voteCount,
+    video: moviedb.video ?? false,
+    voteAverage: moviedb.voteAverage ?? -1,
+    voteCount: moviedb.voteCount ?? -1,
   );
 }

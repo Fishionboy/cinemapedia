@@ -1,64 +1,80 @@
 import 'dart:convert';
+import 'package:cinemapedia/core/helpers/json_helpers.dart';
 
 ActorById actorByIdFromJson(String str) => ActorById.fromJson(json.decode(str));
 
 String actorByIdToJson(ActorById data) => json.encode(data.toJson());
 
-class ActorById {
-    final bool adult;
-    final List<String> alsoKnownAs;
-    final String biography;
-    final DateTime birthday;
-    final dynamic deathday;
-    final int gender;
-    final dynamic homepage;
-    final int id;
-    final String imdbId;
-    final String knownForDepartment;
-    final String name;
-    final String placeOfBirth;
-    final double popularity;
-    final String profilePath;
+class ActorById {  
+  final int gender;
+  final int id;
+  final String imdbId;
+  final String name;
+
+  final DateTime? deathday;
+  final bool? adult;
+  final List<String>? alsoKnownAs;
+  final String? biography;
+  final DateTime? birthday;
+  final String? homepage;
+  final String? knownForDepartment;
+  final String? placeOfBirth;
+  final double? popularity;
+  final String? profilePath;
 
     ActorById({
-        required this.adult,
-        required this.alsoKnownAs,
-        required this.biography,
-        required this.birthday,
-        required this.deathday,
-        required this.gender,
-        required this.homepage,
-        required this.id,
-        required this.imdbId,
-        required this.knownForDepartment,
-        required this.name,
-        required this.placeOfBirth,
-        required this.popularity,
-        required this.profilePath,
+      required this.deathday,
+      required this.gender,
+      required this.id,
+      required this.imdbId,
+      required this.name,
+
+      required this.adult,
+      required this.alsoKnownAs,
+      required this.biography,
+      required this.birthday,
+      required this.homepage,
+      required this.knownForDepartment,
+      required this.placeOfBirth,
+      required this.popularity,
+      required this.profilePath,
     });
 
-    factory ActorById.fromJson(Map<String, dynamic> json) => ActorById(
-        adult: json["adult"],
-        alsoKnownAs: List<String>.from(json["also_known_as"].map((x) => x)),
-        biography: json["biography"],
-        birthday: DateTime.parse(json["birthday"]),
-        deathday: json["deathday"],
+    factory ActorById.fromJson(Map<String, dynamic> json) => ActorById(       
         gender: json["gender"],
-        homepage: json["homepage"],
         id: json["id"],
         imdbId: json["imdb_id"],
-        knownForDepartment: json["known_for_department"],
         name: json["name"],
-        placeOfBirth: json["place_of_birth"],
-        popularity: json["popularity"]?.toDouble(),
-        profilePath: json["profile_path"] ?? 'https://i.pinimg.com/736x/2f/15/f2/2f15f2e8c688b3120d3d26467b06330c.jpg',
+
+        deathday:json["deathday"] != null 
+          ? DateTime.tryParse(json["deathday"])
+          : null,
+        adult: asBool(json["adult"]),
+        alsoKnownAs: json["also_known_as"] != null
+            ? List<String>.from(
+                (json["also_known_as"] as List)
+                    .map((x) => asString(x))
+                    .whereType<String>())
+            : null,
+        biography: asString(json["biography"]),
+        birthday: json["birthday"] != null &&
+                (json["birthday"] as String).isNotEmpty
+            ? DateTime.tryParse(json["birthday"])
+            : null,
+        homepage: asString(json["homepage"]),
+        knownForDepartment: asString(json["known_for_department"]),
+        placeOfBirth: asString(json["place_of_birth"]),
+        popularity: asDouble(json["popularity"]),
+        profilePath: asString(json["profile_path"]),
     );
 
     Map<String, dynamic> toJson() => {
         "adult": adult,
-        "also_known_as": List<dynamic>.from(alsoKnownAs.map((x) => x)),
+        "also_known_as":alsoKnownAs != null 
+          ? List<dynamic>.from(alsoKnownAs!.map((x) => x)) 
+          : null,
         "biography": biography,
-        "birthday": "${birthday.year.toString().padLeft(4, '0')}-${birthday.month.toString().padLeft(2, '0')}-${birthday.day.toString().padLeft(2, '0')}",
+        "birthday": birthday,
         "deathday": deathday,
         "gender": gender,
         "homepage": homepage,

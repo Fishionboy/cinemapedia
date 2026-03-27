@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/legacy.dart';
 final castByMovieProvider = StateNotifierProvider<CastByMovieNotifier,Map<String,List<Cast>>>((ref){
   final castRepository = ref.watch(castRepositoryProvider);
 
-  return CastByMovieNotifier(getCast: castRepository.getActorsByMovie);
+  return CastByMovieNotifier(getCast: castRepository.getCastByMovie);
 });
 
 typedef GetCastCallback = Future <List<Cast>>Function(String movieId);
@@ -20,9 +20,9 @@ CastByMovieNotifier({
 Future<void> loadCast(String movieId)async{
   if( state[movieId] != null) return;
  
-  final List <Cast> actors = await getCast(movieId);
+  final List <Cast> castMembers = await getCast(movieId);
 
-  state= {...state,movieId: actors};
+  state= {...state,movieId: castMembers};
 }
 
 }

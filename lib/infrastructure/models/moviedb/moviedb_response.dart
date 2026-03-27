@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final movieDbResponse = movieDbResponseFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -26,7 +23,9 @@ class MovieDbResponse {
     });
 
     factory MovieDbResponse.fromJson(Map<String, dynamic> json) => MovieDbResponse(
-        dates: json["dates"] != null ? Dates.fromJson(json["dates"]) : null,
+        dates: json["dates"] != null 
+          ? Dates.fromJson(json["dates"]) 
+          : null,
         page: json["page"],
         results: List<MovieMovieDB>.from(json["results"].map((x) => MovieMovieDB.fromJson(x))),
         totalPages: json["total_pages"],
@@ -42,23 +41,31 @@ class MovieDbResponse {
     };
 }
 
-class Dates {
-    final DateTime maximum;
-    final DateTime minimum;
 
-    Dates({
-        required this.maximum,
-        required this.minimum,
-    });
+
+  class Dates {
+    final DateTime? maximum;
+    final DateTime? minimum;
+
+    Dates({this.maximum, this.minimum});
 
     factory Dates.fromJson(Map<String, dynamic> json) => Dates(
-        maximum: DateTime.parse(json["maximum"]),
-        minimum: DateTime.parse(json["minimum"]),
-    );
+          maximum: json["maximum"] != null
+              ? DateTime.tryParse(json["maximum"])
+              : null,
+          minimum: json["minimum"] != null
+              ? DateTime.tryParse(json["minimum"])
+              : null,
+        );
 
     Map<String, dynamic> toJson() => {
-        "maximum": "${maximum.year.toString().padLeft(4, '0')}-${maximum.month.toString().padLeft(2, '0')}-${maximum.day.toString().padLeft(2, '0')}",
-        "minimum": "${minimum.year.toString().padLeft(4, '0')}-${minimum.month.toString().padLeft(2, '0')}-${minimum.day.toString().padLeft(2, '0')}",
-    };
+      "maximum": maximum != null ?
+        "${maximum!.day.toString().padLeft(2, '0')}-${maximum!.month.toString().padLeft(2, '0')}- ${maximum!.year.toString().padLeft(4, '0')}"
+        : null,
+      "minimum": minimum != null 
+        ? "${minimum!.day.toString().padLeft(2, '0')}-${minimum!.month.toString().padLeft(2, '0')}- ${minimum!.year.toString().padLeft(4, '0')}"
+        : null,
+};
+
 }
 

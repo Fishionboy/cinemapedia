@@ -2,7 +2,7 @@ class Cast {
   final int id;
   final String name;
   final String profilePath;
-  final String? character;
+  final String character;
 
   Cast({
     required this.id, 

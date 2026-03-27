@@ -9,7 +9,7 @@ class CastMapper {
     profilePath: cast.profilePath != null
     ? 'https://image.tmdb.org/t/p/w500${cast.profilePath}'
     : 'https://i.pinimg.com/736x/2f/15/f2/2f15f2e8c688b3120d3d26467b06330c.jpg',
-    character: cast.character
+    character: cast.character ?? 'no-character'
     );
 
 }
