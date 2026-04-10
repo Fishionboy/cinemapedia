@@ -1,3 +1,4 @@
+import 'package:cinemapedia/presentation/screens/actors/actor_screen.dart';
 import 'package:cinemapedia/presentation/screens/screens.dart';
 import 'package:cinemapedia/presentation/views/home_views/favorites_view.dart';
 import 'package:cinemapedia/presentation/views/home_views/home_view.dart';
@@ -31,6 +32,17 @@ final appRouter = GoRouter(
                    
                     final movieID = state.pathParameters['id'] ?? 'no-id';
                     return MovieScreen(movieId: movieID);
+                  },
+                ),
+                
+                GoRoute(                 
+                  path: 'actor/:id',
+                  name: ActorScreen.name,
+                  builder: (context, state) {
+                   
+                   final actorId = state.pathParameters['id'] ?? 'no-id';
+
+                    return ActorScreen(actorId: actorId);
                   },
                 ),
               ],

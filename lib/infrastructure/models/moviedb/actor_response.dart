@@ -1,11 +1,28 @@
 import 'dart:convert';
 import 'package:cinemapedia/core/helpers/json_helpers.dart';
 
-ActorById actorByIdFromJson(String str) => ActorById.fromJson(json.decode(str));
+ActorResponse actorByIdFromJson(String str) => ActorResponse.fromJson(json.decode(str));
 
-String actorByIdToJson(ActorById data) => json.encode(data.toJson());
+String actorByIdToJson(ActorResponse data) => json.encode(data.toJson());
 
-class ActorById {  
+class ActorResponse {
+  final ActorDto actorDto;
+
+  ActorResponse({   
+    required this.actorDto
+    });
+
+    factory ActorResponse.fromJson(Map<String, dynamic> json) => ActorResponse(
+      actorDto: ActorDto.fromJson(json),
+      );
+
+      Map<String, dynamic> toJson() =>{
+        "actorDto": actorDto
+      };
+     
+}
+
+class ActorDto {  
   final int gender;
   final int id;
   final String imdbId;
@@ -22,7 +39,7 @@ class ActorById {
   final double? popularity;
   final String? profilePath;
 
-    ActorById({
+    ActorDto({
       required this.deathday,
       required this.gender,
       required this.id,
@@ -40,7 +57,7 @@ class ActorById {
       required this.profilePath,
     });
 
-    factory ActorById.fromJson(Map<String, dynamic> json) => ActorById(       
+    factory ActorDto.fromJson(Map<String, dynamic> json) => ActorDto(       
         gender: json["gender"],
         id: json["id"],
         imdbId: json["imdb_id"],

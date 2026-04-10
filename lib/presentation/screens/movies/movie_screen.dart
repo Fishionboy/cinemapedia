@@ -6,6 +6,7 @@ import 'package:cinemapedia/presentation/providers/storage/favorite_movies_provi
 import 'package:cinemapedia/presentation/providers/storage/is_favorite_movie_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
 
@@ -151,11 +152,21 @@ class _CastByMovie extends ConsumerWidget {
                 FadeInRight(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      castPerson.profilePath,
-                      height: 180,
-                      width: 135,
-                      fit: BoxFit.cover,),
+                    child: Material(
+                      color: Colors.transparent,
+                      child:InkWell(
+                        onTap: (){
+                          context.push('/actor/${castPerson.id}');
+                        },
+
+                        child: Image.network(
+                        castPerson.profilePath,
+                        height: 180,
+                        width: 135,
+                        fit: BoxFit.cover,),
+                      ),
+                      
+                    ),
                   ),
                 ),
                 const SizedBox(height: 5,),
